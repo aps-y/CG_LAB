@@ -43,12 +43,15 @@ int n; /* number of recursive steps */
        vb[0]=v10[0];
        vb[1]=v01[1];
 
-       vc[0]=v00[0];
-       vc[1]=v03[1];
+       vc[0]=v12[0];
+       vc[1]=v13[1];
 
-       divide_triangle(a, v00,, v1, m-1);
-       divide_triangle(c, v1, v2, m-1);
-       divide_triangle(b, v2, v0, m-1);
+       vd[0]=v02[0];
+       vd[1]=v10[1];
+
+       divide_triangle(a, v00,va, v03, m-1);
+       divide_triangle(v10,b,v01, vb, m-1);
+       divide_triangle(vc, v12,c,v0, m-1);
      }
      else
        triangle(a,b,c);
