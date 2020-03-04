@@ -12,11 +12,13 @@ void menu(int num){
   }
   glutPostRedisplay();
 } 
-void createMenu(void){
-    glutCreateMenu(menu);
+void createMenu(void){     submenu_id = glutCreateMenu(menu);
     glutAddMenuEntry("Sphere", 2);
     glutAddMenuEntry("Cone", 3);
     glutAddMenuEntry("Torus", 4);
+    glutAddMenuEntry("Teapot", 5);     menu_id = glutCreateMenu(menu);
+    glutAddMenuEntry("Clear", 1);
+    glutAddSubMenu("Draw", submenu_id);
     glutAddMenuEntry("Quit", 0);     glutAttachMenu(GLUT_RIGHT_BUTTON);
 } 
 void display(void){
@@ -55,3 +57,4 @@ int main(int argc, char **argv){     glutInit(&argc, argv);
     glutDisplayFunc(display);     glutMainLoop();
     return EXIT_SUCCESS;
 }
+Promoted Content

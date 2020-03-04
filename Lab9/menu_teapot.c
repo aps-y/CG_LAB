@@ -4,31 +4,51 @@
 static int window;
 static int menu_id;
 static int value = 0;
+static int rot = 0;
+int jj=0;
 
 void menu(int num){
   if(num == 0){
     glutDestroyWindow(window);
     exit(0);
-  }else{
+  }
+  else if(num==4)
+  {
+      rot+=30;
+      jj=1;
+    }
+    else if(num==5)
+    {
+        rot =0;
+        value =0;
+        jj=0;
+    }
+    else{
     value = num;
   }
   glutPostRedisplay();
+  
 } 
 
 void createMenu(void){
-    glutCreateMenu(menu);
+    menu_id = glutCreateMenu(menu);
     glutAddMenuEntry("Solid", 2);
     glutAddMenuEntry("Wired", 3);
-    glutAddMenuEntry("Quit", 0); 
+    glutCreateMenu(menu);
+    glutAddSubMenu("Make", menu_id);
+    glutAddMenuEntry("Quit", 0);
+    glutAddMenuEntry("Rotate", 4);
+    glutAddMenuEntry("Reset", 5);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 } 
 
 
 void display () {
 
-    /* clear window */
+    /* clear window */ 
     glClear(GL_COLOR_BUFFER_BIT);
-
+    if(jj)
+    {glRotatef(rot,0,0,1.0);jj=0;}
     /* draw scene */
     if(value==2)
     {
