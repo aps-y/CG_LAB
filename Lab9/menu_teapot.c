@@ -48,7 +48,7 @@ void display () {
     /* clear window */ 
     glClear(GL_COLOR_BUFFER_BIT);
     if(jj)
-    {glRotatef(rot,0,0,1.0);jj=0;}
+    {glRotatef(rot,0,0,1.0);jj=0; rot=0;}
     /* draw scene */
     if(value==2)
     {
