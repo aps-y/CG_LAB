@@ -3,7 +3,7 @@
 #include<GL/glut.h>
 
 
-int n=0;
+int n=0, l=0;
 int arr[10];
 void DisplayString(char string[], float x, float y)
 {
@@ -11,10 +11,8 @@ void DisplayString(char string[], float x, float y)
     int w;
     w = glutBitmapLength(GLUT_BITMAP_9_BY_15, string);
     
-    glColor3f(1.0,1.0,0.0);
+    glColor3f(1.0,1.0,1.0);
     glRasterPos2f(x-(float)w/2, y);
-   // printf("here \n");
-    //int len = strlen(string);
     for (int i = 0; string[i] != '\0'; i++) {
     glutBitmapCharacter(GLUT_BITMAP_9_BY_15, string[i]);
     }
@@ -28,7 +26,6 @@ void CreateStack()
     for(int i=0;i<10;i++)
     {
         glBegin(GL_LINE_STRIP);
-         glColor3f(0.0,1.0,1.0);
             glVertex2d(50,k);
             glVertex2d(50,k+40);
             glVertex2d(-50,k+40);
@@ -42,14 +39,13 @@ void CreateStack()
 void mydisplay()
 {
      glClear(GL_COLOR_BUFFER_BIT);
-     unsigned char string[] = "Press Key 'I' to insert elements into stack";
-     unsigned char str[] = "Press Key 'D' to pop elements from stack";
-     DisplayString("Stack Demo",0,340);
-     DisplayString(string, 0, 320);
-     DisplayString(str, 0, 300);
+     unsigned char string[] = "Press Key 'I' to insert elements into queue";
+     unsigned char str[] = "Press Key 'D' to pop elements from queue";
+     DisplayString("Queue Demo",0,340);
+      DisplayString(string, 0, 320);
+      DisplayString(str, 0, 300);
 
      glBegin(GL_LINES);
-        glColor3f(0.0,1.0,1.0);
         glVertex2d(-50,-200);
         glVertex2d(50,-200);
         glEnd();
@@ -66,7 +62,7 @@ void myinit()
      gluOrtho2D(-350.0, 350.0, -350.0, 350.0);
      glMatrixMode(GL_MODELVIEW);
      glClearColor (0.0, 0.0, 0.0,0.0);
-     glColor3f(1.0,1.0,0.0);
+     glColor3f(1.0,1.0,1.0);
 }
 void drawTriangle(int y)
 {
@@ -85,12 +81,14 @@ void push()
      char str[3];
     int y = -180;
     if(n==10){
-    DisplayString("Stack Overflow",0,-220);
+    DisplayString("Queue Overflow",0,-220);
      for(;i<n;i++)
     {
+        if(i>=l) {
         snprintf(str,3,"%d",arr[i]);
        // printf("%s\n",str);
         DisplayString(str,0,y);
+    }
         y+=40;
     }
     drawTriangle(y-40);
@@ -101,9 +99,11 @@ void push()
    
     for(;i<n;i++)
     {
+        if(i>=l) {
         snprintf(str,3,"%d",arr[i]);
        // printf("%s\n",str);
         DisplayString(str,0,y);
+    }
         y+=40;
     }
     drawTriangle(y-40);
@@ -112,36 +112,36 @@ void push()
 void pop()
 {
      mydisplay();
-     if(n==0)
+     if(l==n)
      {
-         DisplayString("Stack Empty",0,-220);
+         DisplayString("Queue Empty",0,-220);
          return;
      }
-    n--;
     char str[3];
     int y=-180;
+    l++;
      for(int i=0;i<n;i++)
-    {
+    {   if(i>=l) {
         snprintf(str,3,"%d",arr[i]);
         //printf("%s\n",str);
         DisplayString(str,0,y);
+    }
         y+=40;
     }
-    if(n)
     drawTriangle(y-40);
 }
 
 void keyboard(unsigned char key, int x, int y)
 {
-	switch (key)
-	{
-	case 'i' | 'I': push();
-		break;
+    switch (key)
+    {
+    case 'i' | 'I': push();
+        break;
 
-	case 'd' | 'D': pop();
-		break;
-	case 'q' | 'Q': exit(0);
-	}
+    case 'd' | 'D': pop();
+        break;
+    case 'q' | 'Q': exit(0);
+    }
 }
 
 

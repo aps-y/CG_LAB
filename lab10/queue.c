@@ -3,7 +3,7 @@
 #include<GL/glut.h>
 
 
-int n=0;
+int b=9, e=0;
 int arr[10];
 void DisplayString(char string[], float x, float y)
 {
@@ -81,54 +81,61 @@ void drawTriangle(int y)
 void push()
 {
     mydisplay();
-    int i=0;
+    int i=(b+1)%10;
      char str[3];
-    int y = -180;
-    if(n==10){
-    DisplayString("Stack Overflow",0,-220);
-     for(;i<n;i++)
+    int y = -180 + (i-1)*40;
+    if(b==e){
+    DisplayString("Queue Full",0,-220);
+    for(;i!=e;(i++)%10)
     {
         snprintf(str,3,"%d",arr[i]);
        // printf("%s\n",str);
         DisplayString(str,0,y);
         y+=40;
     }
-    drawTriangle(y-40);
+    //drawTriangle(y-40);
     return;
     }
     int a = rand()%100;
-    arr[n++]=a;
+    arr[b]=a;
+    b--;
+    if(b==-1)
+    b=9;
    
-    for(;i<n;i++)
+     for(;i!=e;(i++)%10)
     {
         snprintf(str,3,"%d",arr[i]);
        // printf("%s\n",str);
         DisplayString(str,0,y);
         y+=40;
     }
-    drawTriangle(y-40);
+   // drawTriangle(y-40);
    
 }
 void pop()
 {
      mydisplay();
-     if(n==0)
+     e--;
+     if(e==0)
+     e=9;
+     if(e==b)
      {
-         DisplayString("Stack Empty",0,-220);
+         DisplayString("Queue Empty",0,-220);
+         e=0;b=9;
          return;
      }
-    n--;
     char str[3];
-    int y=-180;
-     for(int i=0;i<n;i++)
+    int y=-180 + (b-1)*40;
+    int i=b;
+   for(;i!=e;(i++)%10)
     {
         snprintf(str,3,"%d",arr[i]);
-        //printf("%s\n",str);
+       // printf("%s\n",str);
         DisplayString(str,0,y);
         y+=40;
     }
-    if(n)
-    drawTriangle(y-40);
+    
+    //drawTriangle(y-40);
 }
 
 void keyboard(unsigned char key, int x, int y)
